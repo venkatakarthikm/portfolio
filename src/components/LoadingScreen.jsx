@@ -81,31 +81,10 @@ export default function LoadingScreen({ onReachNav, onDone }) {
   }, [])
 
   const runSequence = useCallback(() => {
-    console.log('[wave] runSequence called, overlayRef.current =', overlayRef.current)
-    if (!overlayRef.current || timelineRef.current) {
-      console.log(
-        '[wave] BAILING OUT — overlayRef null?', !overlayRef.current,
-        'timeline already exists?', !!timelineRef.current,
-      )
-      return
-    }
+    if (!overlayRef.current || timelineRef.current) return
 
     const tl = gsap.timeline()
     timelineRef.current = tl
-
-    // Whole-timeline progress ping, ~once per second, so we can see the
-    // playhead moving (or not) regardless of which segment we're in.
-    let lastLoggedAt = 0
-    tl.eventCallback('onUpdate', () => {
-      const now = Date.now()
-      if (now - lastLoggedAt > 1000) {
-        lastLoggedAt = now
-        console.log(
-          '[wave] tl progress =', tl.progress().toFixed(3),
-          '  time =', tl.time().toFixed(2), '/', tl.duration().toFixed(2),
-        )
-      }
-    })
 
     // 1. Liquid fill of the full name.
     tl.add(() => {
@@ -168,8 +147,6 @@ export default function LoadingScreen({ onReachNav, onDone }) {
         fullNameRef.current.style.clipPath = 'none'
       }
     }, 2.95)
-
-    console.log('[wave] isMobile branch used:', isMobile)
 
     if (isMobile) {
       // On small screens the full name is intentionally skipped. MVK starts
@@ -277,10 +254,6 @@ export default function LoadingScreen({ onReachNav, onDone }) {
       tl.addLabel('flyStart', 'morphStart+=2.45')
     }
 
-    tl.add(() => {
-      console.log('[wave] flyStart reached, tl.time() =', tl.time().toFixed(2))
-    }, 'flyStart')
-
     // Fly the finished MVK row to the navbar.
     tl.to(
       gradientRowRef.current,
@@ -289,15 +262,9 @@ export default function LoadingScreen({ onReachNav, onDone }) {
           const navLogo = document.getElementById('nav-logo')
           const glyph = gradientRowRef.current
 
-          if (!navLogo || !glyph) {
-            console.log('[wave] fly scale getter: missing navLogo or glyph', { navLogo, glyph })
-            return 0.2
-          }
+          if (!navLogo || !glyph) return 0.2
           const h = glyph.getBoundingClientRect().height
-          if (h === 0) {
-            console.log('[wave] fly scale getter: glyph height is 0')
-            return 0.2
-          }
+          if (h === 0) return 0.2
           return navLogo.getBoundingClientRect().height / h
         },
         x: () => {
@@ -317,9 +284,7 @@ export default function LoadingScreen({ onReachNav, onDone }) {
         transformOrigin: 'top left',
         duration: 1.45,
         ease: 'power3.inOut',
-        onStart: () => console.log('[wave] fly tween STARTED, tl.time() =', tl.time().toFixed(2)),
         onComplete: () => {
-          console.log('[wave] fly tween COMPLETE, tl.time() =', tl.time().toFixed(2), '— calling onReachNav()')
           onReachNav?.()
         },
       },
@@ -331,10 +296,6 @@ export default function LoadingScreen({ onReachNav, onDone }) {
 
     // 5. Recede the black curtain below the navbar.
     tl.add(() => {
-      console.log('[wave] curtain step reached, tl.time() =', tl.time().toFixed(2), {
-        curtain: curtainRef.current,
-        curtainRect: curtainRef.current?.getBoundingClientRect(),
-      })
       oceanTween.current = gsap.to(oceanSweep.current, {
         phase: '+=6.283',
         duration: 0.85,
@@ -350,13 +311,8 @@ export default function LoadingScreen({ onReachNav, onDone }) {
         p: 1,
         duration: 1.45,
         ease: 'power2.inOut',
-        onStart: () => console.log('[wave] p:0->1 tween STARTED, tl.time() =', tl.time().toFixed(2)),
-        onUpdate: () => {
-          updateOceanClip()
-          if (Math.random() < 0.05) console.log('[wave] p =', oceanSweep.current.p.toFixed(2))
-        },
+        onUpdate: updateOceanClip,
         onComplete: () => {
-          console.log('[wave] p:0->1 tween COMPLETE — hiding overlay')
           oceanTween.current?.kill()
           setShow(false)
           onDone?.()
@@ -364,8 +320,6 @@ export default function LoadingScreen({ onReachNav, onDone }) {
       },
       'flyStart+=2.2',
     )
-
-    console.log('[wave] TIMELINE BUILD FINISHED. duration =', tl.duration(), 'paused =', tl.paused())
   }, [isMobile, onReachNav, onDone, updateOceanClip, updateWaterClip])
 
   useEffect(() => {
@@ -380,7 +334,6 @@ export default function LoadingScreen({ onReachNav, onDone }) {
   // Absolute fallback: Ensure the loading screen NEVER traps the user forever.
   useEffect(() => {
     const fallbackTimer = setTimeout(() => {
-      console.log('[wave] 12s FALLBACK TIMER FIRED — forcing overlay closed')
       setShow(false)
       onReachNav?.()
       onDone?.()
@@ -404,26 +357,18 @@ export default function LoadingScreen({ onReachNav, onDone }) {
     if (document.fonts && document.fonts.ready) {
       let isFired = false
       const fire = () => {
-        console.log('[wave] fire() invoked, isFired was', isFired, 'overlayRef.current =', overlayRef.current)
         if (!isFired) {
           isFired = true
           runSequenceRef.current()
         }
       }
-      document.fonts.ready.then(() => {
-        console.log('[wave] fonts.ready resolved')
-        fire()
-      })
-      setTimeout(() => {
-        console.log('[wave] 500ms fallback fired')
-        fire()
-      }, 500) // Fallback to start animation anyway after 500ms
+      document.fonts.ready.then(fire)
+      setTimeout(fire, 500) // Fallback to start animation anyway after 500ms
     } else {
       setTimeout(() => runSequenceRef.current(), 200)
     }
 
     return () => {
-      console.log('[wave] CLEANUP running — killing timeline. timelineRef.current =', timelineRef.current)
       timelineRef.current?.kill()
       timelineRef.current = null
       waterTween.current?.kill()
