@@ -389,6 +389,14 @@ export default function LoadingScreen({ onReachNav, onDone }) {
     return () => clearTimeout(fallbackTimer)
   }, [onReachNav, onDone])
 
+  // Always call the LATEST runSequence (which closes over the latest
+  // onReachNav/onDone), without that requiring the mount effect below to
+  // re-run every time those props get a new identity from the parent.
+  const runSequenceRef = useRef(runSequence)
+  useEffect(() => {
+    runSequenceRef.current = runSequence
+  }, [runSequence])
+
   useEffect(() => {
     if (ranOnceRef.current) return
     ranOnceRef.current = true
@@ -399,7 +407,7 @@ export default function LoadingScreen({ onReachNav, onDone }) {
         console.log('[wave] fire() invoked, isFired was', isFired, 'overlayRef.current =', overlayRef.current)
         if (!isFired) {
           isFired = true
-          runSequence()
+          runSequenceRef.current()
         }
       }
       document.fonts.ready.then(() => {
@@ -411,7 +419,7 @@ export default function LoadingScreen({ onReachNav, onDone }) {
         fire()
       }, 500) // Fallback to start animation anyway after 500ms
     } else {
-      setTimeout(runSequence, 200)
+      setTimeout(() => runSequenceRef.current(), 200)
     }
 
     return () => {
@@ -421,7 +429,17 @@ export default function LoadingScreen({ onReachNav, onDone }) {
       waterTween.current?.kill()
       oceanTween.current?.kill()
     }
-  }, [runSequence])
+    // Intentionally empty — this effect must run exactly once for the
+    // component's lifetime. It used to depend on [runSequence], which
+    // meant every time a parent re-render gave onReachNav/onDone a new
+    // inline function identity, this effect's cleanup would kill the
+    // in-flight timeline and the ranOnceRef guard would then block it
+    // from ever restarting — leaving the overlay stuck until the 12s
+    // fallback forced it closed. Routing through runSequenceRef above
+    // means we always call the latest logic without needing this effect
+    // to re-fire.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   if (!show) return null
 
