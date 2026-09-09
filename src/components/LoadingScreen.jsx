@@ -255,8 +255,6 @@ export default function LoadingScreen({ onReachNav, onDone }) {
     }
 
     // Fly the finished MVK row to the navbar.
-    tl.addLabel('flyStart', 'morphStart+=2.2')
-
     tl.to(
       gradientRowRef.current,
       {
