@@ -337,7 +337,7 @@ export default function LoadingScreen({ onReachNav, onDone }) {
       setShow(false)
       onReachNav?.()
       onDone?.()
-    }, 7000)
+    }, 12000)
 
     return () => clearTimeout(fallbackTimer)
   }, [onReachNav, onDone])
