@@ -296,6 +296,10 @@ export default function LoadingScreen({ onReachNav, onDone }) {
 
     // 5. Recede the black curtain below the navbar.
     tl.add(() => {
+      console.log('[wave] curtain step reached', {
+        curtain: curtainRef.current,
+        curtainRect: curtainRef.current?.getBoundingClientRect(),
+      })
       oceanTween.current = gsap.to(oceanSweep.current, {
         phase: '+=6.283',
         duration: 0.85,
@@ -311,8 +315,13 @@ export default function LoadingScreen({ onReachNav, onDone }) {
         p: 1,
         duration: 1.45,
         ease: 'power2.inOut',
-        onUpdate: updateOceanClip,
+        onStart: () => console.log('[wave] p:0->1 tween STARTED'),
+        onUpdate: () => {
+          updateOceanClip()
+          if (Math.random() < 0.05) console.log('[wave] p =', oceanSweep.current.p.toFixed(2))
+        },
         onComplete: () => {
+          console.log('[wave] p:0->1 tween COMPLETE — hiding overlay')
           oceanTween.current?.kill()
           setShow(false)
           onDone?.()
