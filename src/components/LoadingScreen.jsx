@@ -333,6 +333,9 @@ export default function LoadingScreen({ onReachNav, onDone }) {
       },
       'flyStart+=2.2',
     )
+
+    console.log('[wave] TIMELINE BUILD FINISHED. duration =', tl.duration(), 'paused =', tl.paused())
+    console.log('[wave] gsap.globalTimeline.paused() =', gsap.globalTimeline.paused(), 'ticker fps =', gsap.ticker.fps)
   }, [isMobile, onReachNav, onDone, updateOceanClip, updateWaterClip])
 
   useEffect(() => {
