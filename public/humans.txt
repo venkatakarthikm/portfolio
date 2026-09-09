@@ -1,0 +1,20 @@
+/* HUMANS.TXT - humanstxt.org */
+
+/* TEAM */
+Developer & Designer: Muchu Venkata Karthik
+Contact: 2200030154cseh@gmail.com
+LinkedIn: https://linkedin.com/in/venkatakarthikm
+GitHub: https://github.com/venkatakarthikm
+Location: Andhra Pradesh, India
+
+/* THANKS */
+Built with GSAP (Greensock), Lenis, React, Vite, Tailwind CSS.
+GitHub stats powered by: streak-stats.demolab.com, github-profile-trophy.vercel.app, github-profile-summary-cards.vercel.app
+
+/* SITE */
+Language: English
+Standards: HTML5, CSS3, WCAG 2.1 AA, JSON-LD
+Components: React 18
+Build tool: Vite 5
+Deployed on: Stackinfi (muchukarthik.stackinfi.in)
+Last update: 2026-09-03

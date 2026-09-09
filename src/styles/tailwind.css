@@ -1,0 +1,27 @@
+@import "./tokens.css";
+@import "tailwindcss";
+
+/* ── Tailwind theme extension via CSS variables ── */
+@theme {
+  --color-accent-1: var(--accent-1);
+  --color-accent-2: var(--accent-2);
+  --color-accent-3: var(--accent-3);
+  --color-bg-base: var(--bg-base);
+  --color-bg-elev-1: var(--bg-elev-1);
+  --color-bg-elev-2: var(--bg-elev-2);
+  --color-fg-primary: var(--fg-primary);
+  --color-fg-muted: var(--fg-muted);
+  --color-border: var(--border);
+
+  --font-family-display: var(--font-display);
+  --font-family-mono: var(--font-mono);
+}
+
+@utility container {
+  width: 100%;
+  max-width: var(--container, 1260px);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(1rem, 5vw, 3rem);
+  padding-right: clamp(1rem, 5vw, 3rem);
+}

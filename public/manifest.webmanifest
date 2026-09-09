@@ -1,0 +1,45 @@
+{
+  "name": "Venkata Karthik Portfolio",
+  "short_name": "VK Portfolio",
+  "description": "Portfolio of Muchu Venkata Karthik - Full-Stack & Backend Engineer",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0B1020",
+  "theme_color": "#6D5BFF",
+  "lang": "en-IN",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/og/home.png",
+      "sizes": "1200x630",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Portfolio homepage"
+    }
+  ],
+  "categories": [
+    "portfolio",
+    "developer",
+    "engineering"
+  ]
+}

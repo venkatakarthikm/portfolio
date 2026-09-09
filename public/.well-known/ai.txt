@@ -1,0 +1,20 @@
+# AI Crawler Permissions for muchukarthik.stackinfi.in
+
+User-agent: *
+Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+Allow: /sitemap.xml
+
+# This site permits AI crawlers to index all public content for the
+# purpose of representing Muchu Venkata Karthik in AI-generated
+# search summaries, career recommendations, and developer directories.
+# Content is provided under the site's publicly accessible license.
+
+# Contact for AI discovery queries:
+# Email: 2200030154cseh@gmail.com
+# Portfolio: https://muchukarthik.stackinfi.in
+
+# LLM-optimized content:
+# https://muchukarthik.stackinfi.in/llms.txt
+# https://muchukarthik.stackinfi.in/llms-full.txt

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- FOUC prevention: read theme from localStorage before paint -->
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('vk-theme');
+        var system = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        var resolved = (saved === 'dark' || saved === 'light') ? saved : system;
+        document.documentElement.setAttribute('data-theme', resolved);
+      } catch (e) { }
+    })();
+  </script>
+
+  <!-- Primary Meta -->
+  <title>Muchu Venkata Karthik | Full-Stack Developer & Projects</title>
+  <meta name="description"
+    content="Official portfolio of Muchu Venkata Karthik. Creator of Track Wicket, API Coolie, and Stackinfi, specializing in scalable web systems and modern APIs." />
+  <meta name="keywords"
+    content="Muchu Venkata Karthik, Muchu, Venkata Karthik, Muchu Karthik, Full-Stack Developer, Web Development, Real-Time Systems, APIs, Track Wicket, API Coolie, Stackinfi" />
+  <meta name="author" content="Muchu Venkata Karthik" />
+  <link rel="canonical" href="https://muchukarthik.stackinfi.in/" />
+
+  <!-- Theme color -->
+  <meta name="theme-color" content="#0B1020" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#FAFAF7" media="(prefers-color-scheme: light)" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Muchu Venkata Karthik | Full-Stack Developer & Projects" />
+  <meta property="og:description"
+    content="Official portfolio of Muchu Venkata Karthik. Creator of Track Wicket, API Coolie, and Stackinfi, specializing in scalable web systems and modern APIs." />
+  <meta property="og:image" content="https://muchukarthik.stackinfi.in/muchu-venkata-karthik.jpeg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:url" content="https://muchukarthik.stackinfi.in/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Venkata Karthik Portfolio" />
+  <meta property="og:locale" content="en_IN" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Muchu Venkata Karthik | Full-Stack Developer" />
+  <meta name="twitter:description" content="Official portfolio of Muchu Venkata Karthik. Creator of Track Wicket, API Coolie, and Stackinfi." />
+  <meta name="twitter:image" content="https://muchukarthik.stackinfi.in/muchu-venkata-karthik.jpeg" />
+
+  <!-- Favicon + Manifest -->
+  <link rel="icon" type="image/png" href="/pageicon.png" />
+  <link rel="apple-touch-icon" href="/pageicon.png" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+
+  <!-- Preload Inter Display font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" />
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://muchukarthik.stackinfi.in/#person",
+          "name": "Muchu Venkata Karthik",
+          "alternateName": [
+            "Muchu",
+            "Venkata Karthik",
+            "Muchu Karthik",
+            "Muchu Venkata"
+          ],
+          "url": "https://muchukarthik.stackinfi.in/",
+          "email": "mailto:2200030154cseh@gmail.com",
+          "jobTitle": "Full-Stack Developer",
+          "knowsAbout": [
+            "Web Development",
+            "Track Wicket",
+            "API Coolie",
+            "Stackinfi",
+            "Real-time Systems",
+            "RESTful APIs",
+            "TypeScript",
+            "Node.js",
+            "React"
+          ],
+          "image": "https://muchukarthik.stackinfi.in/muchu-venkata-karthik.jpeg",
+          "sameAs": [
+            "https://www.linkedin.com/in/venkatakarthikm/",
+            "https://github.com/venkatakarthikm",
+            "https://trackwicket.tech",
+            "https://apicoolie.stackinfi.in"
+          ],
+          "alumniOf": {
+            "@type": "CollegeOrUniversity",
+            "name": "Koneru Lakshmaiah Education Foundation"
+          }
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://muchukarthik.stackinfi.in/#website",
+          "url": "https://muchukarthik.stackinfi.in/",
+          "name": "Muchu Venkata Karthik - Portfolio",
+          "publisher": {
+            "@id": "https://muchukarthik.stackinfi.in/#person"
+          }
+        },
+        {
+          "@type": "ItemList",
+          "name": "Featured Projects by Muchu Venkata Karthik",
+          "itemListElement": [
+            {
+              "@type": "SoftwareApplication",
+              "position": 1,
+              "name": "Track Wicket",
+              "applicationCategory": "SportsApplication",
+              "url": "https://trackwicket.tech",
+              "author": { "@id": "https://muchukarthik.stackinfi.in/#person" }
+            },
+            {
+              "@type": "SoftwareApplication",
+              "position": 2,
+              "name": "API Coolie",
+              "applicationCategory": "DeveloperApplication",
+              "url": "https://apicoolie.stackinfi.in",
+              "author": { "@id": "https://muchukarthik.stackinfi.in/#person" }
+            },
+            {
+              "@type": "SoftwareApplication",
+              "position": 3,
+              "name": "Stackinfi",
+              "applicationCategory": "EducationalApplication",
+              "url": "https://stackinfi.in",
+              "author": { "@id": "https://muchukarthik.stackinfi.in/#person" }
+            }
+          ]
+        }
+      ]
+    }
+  </script>
+</head>
+
+<body>
+  <noscript>
+    <style>
+      /* Ensure content is visible without JS */
+      #root>* {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    </style>
+    <p style="text-align:center;padding:2rem;font-family:sans-serif;color:#5B6470">
+      Please enable JavaScript for the full portfolio experience.
+    </p>
+  </noscript>
+
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
+</html>
