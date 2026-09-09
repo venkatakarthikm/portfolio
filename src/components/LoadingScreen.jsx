@@ -346,8 +346,16 @@ export default function LoadingScreen({ onReachNav, onDone }) {
     if (ranOnceRef.current) return
     ranOnceRef.current = true
 
-    if (document.fonts?.ready) {
-      document.fonts.ready.then(runSequence)
+    if (document.fonts && document.fonts.ready) {
+      let isFired = false
+      const fire = () => {
+        if (!isFired) {
+          isFired = true
+          runSequence()
+        }
+      }
+      document.fonts.ready.then(fire)
+      setTimeout(fire, 500) // Fallback to start animation anyway after 500ms
     } else {
       setTimeout(runSequence, 200)
     }
