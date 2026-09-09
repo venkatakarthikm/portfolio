@@ -81,7 +81,11 @@ export default function LoadingScreen({ onReachNav, onDone }) {
   }, [])
 
   const runSequence = useCallback(() => {
-    if (!overlayRef.current || timelineRef.current) return
+    console.log('[wave] runSequence called, overlayRef.current =', overlayRef.current)
+    if (!overlayRef.current || timelineRef.current) {
+      console.log('[wave] BAILING OUT — overlayRef null?', !overlayRef.current, 'timeline already exists?', !!timelineRef.current)
+      return
+    }
 
     const tl = gsap.timeline()
     timelineRef.current = tl
@@ -358,13 +362,20 @@ export default function LoadingScreen({ onReachNav, onDone }) {
     if (document.fonts && document.fonts.ready) {
       let isFired = false
       const fire = () => {
+        console.log('[wave] fire() invoked, isFired was', isFired, 'overlayRef.current =', overlayRef.current)
         if (!isFired) {
           isFired = true
           runSequence()
         }
       }
-      document.fonts.ready.then(fire)
-      setTimeout(fire, 500) // Fallback to start animation anyway after 500ms
+      document.fonts.ready.then(() => {
+        console.log('[wave] fonts.ready resolved')
+        fire()
+      })
+      setTimeout(() => {
+        console.log('[wave] 500ms fallback fired')
+        fire()
+      }, 500) // Fallback to start animation anyway after 500ms
     } else {
       setTimeout(runSequence, 200)
     }
