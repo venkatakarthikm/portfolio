@@ -263,7 +263,9 @@ export default function LoadingScreen({ onReachNav, onDone }) {
           const glyph = gradientRowRef.current
 
           if (!navLogo || !glyph) return 0.2
-          return navLogo.getBoundingClientRect().height / glyph.getBoundingClientRect().height
+          const h = glyph.getBoundingClientRect().height
+          if (h === 0) return 0.2
+          return navLogo.getBoundingClientRect().height / h
         },
         x: () => {
           const navLogo = document.getElementById('nav-logo')
@@ -328,6 +330,17 @@ export default function LoadingScreen({ onReachNav, onDone }) {
     window.addEventListener('resize', updateViewportMode)
     return () => window.removeEventListener('resize', updateViewportMode)
   }, [])
+
+  // Absolute fallback: Ensure the loading screen NEVER traps the user forever.
+  useEffect(() => {
+    const fallbackTimer = setTimeout(() => {
+      setShow(false)
+      onReachNav?.()
+      onDone?.()
+    }, 7000)
+
+    return () => clearTimeout(fallbackTimer)
+  }, [onReachNav, onDone])
 
   useEffect(() => {
     if (ranOnceRef.current) return
